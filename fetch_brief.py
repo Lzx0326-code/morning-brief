@@ -4,7 +4,9 @@ import re
 import sys
 from datetime import datetime, timezone
 
-SYSTEM_PROMPT = """You are a financial news analyst. Search the web for today's most important finance news (last 24 hours) across three categories: Markets & Equities, Macroeconomics & Central Banks, and M&A & Corporate Strategy.
+SYSTEM_PROMPT = """You are a financial news analyst. Search the web for today's most important and market-moving finance news (last 24 hours) across three categories: Markets & Equities, Macroeconomics & Central Banks, and M&A & Corporate Strategy.
+
+For each category, select the 5 most important and influential stories — prioritise stories with the largest market impact, biggest figures involved, widest economic consequences, or most significant policy implications. Ignore minor or routine news.
 
 Return ONLY a valid JSON object — no markdown, no backticks, no preamble:
 {
@@ -14,12 +16,16 @@ Return ONLY a valid JSON object — no markdown, no backticks, no preamble:
     "stories": [
       {"title": "Story title", "summary": "One sentence with key data.", "source": "Outlet"},
       {"title": "...", "summary": "...", "source": "..."},
+      {"title": "...", "summary": "...", "source": "..."},
+      {"title": "...", "summary": "...", "source": "..."},
       {"title": "...", "summary": "...", "source": "..."}
     ]
   },
   "macro": {
     "headline": "One sentence macro overview",
     "stories": [
+      {"title": "...", "summary": "...", "source": "..."},
+      {"title": "...", "summary": "...", "source": "..."},
       {"title": "...", "summary": "...", "source": "..."},
       {"title": "...", "summary": "...", "source": "..."},
       {"title": "...", "summary": "...", "source": "..."}
@@ -30,11 +36,13 @@ Return ONLY a valid JSON object — no markdown, no backticks, no preamble:
     "stories": [
       {"title": "...", "summary": "...", "source": "..."},
       {"title": "...", "summary": "...", "source": "..."},
+      {"title": "...", "summary": "...", "source": "..."},
+      {"title": "...", "summary": "...", "source": "..."},
       {"title": "...", "summary": "...", "source": "..."}
     ]
   }
 }
-Source exclusively from these official outlets: BBC News (bbc.com/news), Financial Times (ft.com), Reuters (reuters.com), Bloomberg (bloomberg.com), The Wall Street Journal (wsj.com), The Guardian Business (theguardian.com/business), Sky News Business (news.sky.com/business), or official central bank websites (bankofengland.co.uk, federalreserve.gov, ecb.europa.eu). Do not use aggregators, blogs, or secondary sources. Include the outlet name in the source field. Return ONLY the JSON object."""
+Source exclusively from these official outlets: BBC News (bbc.com/news), Financial Times (ft.com), Reuters (reuters.com), Bloomberg (bloomberg.com), The Wall Street Journal (wsj.com), The Guardian Business (theguardian.com/business), Sky News Business (news.sky.com/business), or the official websites of central banks (bankofengland.co.uk, federalreserve.gov, ecb.europa.eu). Do not use aggregators, blogs, or secondary sources. Include the outlet name in the source field. Return ONLY the JSON object."""
 
 def fetch_brief():
     client = anthropic.Anthropic()
@@ -48,7 +56,7 @@ def fetch_brief():
         tools=[{"type": "web_search_20250305", "name": "web_search"}],
         messages=[{
             "role": "user",
-            "content": f"Search for today's ({date_str}) top finance news. Return only the JSON object."
+            "content": f"Search for today's ({date_str}) top 5 most important finance news stories per category. Return only the JSON object."
         }]
     )
     text = "".join(block.text for block in response.content if block.type == "text")
