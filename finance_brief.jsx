@@ -37,7 +37,7 @@ Return ONLY a valid JSON object — no markdown, no backticks, no preamble:
     ]
   }
 }
-Source from FT, Bloomberg, Reuters, WSJ. Return ONLY the JSON object.`;
+Source exclusively from these official outlets: BBC News (bbc.com/news), Financial Times (ft.com), Reuters (reuters.com), Bloomberg (bloomberg.com), The Wall Street Journal (wsj.com), The Guardian Business (theguardian.com/business), Sky News Business (news.sky.com/business), or official central bank websites (bankofengland.co.uk, federalreserve.gov, ecb.europa.eu). Do not use aggregators, blogs, or secondary sources. Include the outlet name in the source field. Return ONLY the JSON object.`;
 
 const ANALYSIS_SYSTEM_PROMPT = `You are a senior financial analyst providing a deep educational breakdown of a news story.
 
