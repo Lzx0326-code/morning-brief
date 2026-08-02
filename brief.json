@@ -1,1 +1,67 @@
-{}
+{
+  "brief": {
+    "date": "Sunday, August 2, 2026",
+    "markets": {
+      "headline": "U.S. equities closed out July on a positive note as Amazon's blockbuster earnings lifted sentiment, though surging Treasury yields and Middle East uncertainty weighed on the broader weekly outlook.",
+      "stories": [
+        {
+          "title": "S&P 500 and Nasdaq Rally on Final Day of July, Led by Amazon Surge",
+          "summary": "The S&P 500 rose 0.7% to 7,489.72 and the Nasdaq added 1% to 25,373.85 on July 31 as Amazon shares jumped following record earnings, even as the 30-year Treasury yield spiked to its highest level since 2007 at 5.25%.",
+          "source": "Bloomberg / CNBC"
+        },
+        {
+          "title": "Amazon Q2 Results: AWS Posts Fastest Growth in 18 Quarters, Revenue Tops $200B",
+          "summary": "Amazon reported Q2 2026 revenue of $200.6 billion, up 20% year-over-year, with AWS sales surging 37% to $42.2 billion — its fastest growth since 2021 — driven by AI workloads, sending shares up more than 10% in after-hours trading.",
+          "source": "Bloomberg"
+        },
+        {
+          "title": "Nasdaq-100 Posts Steepest Monthly Loss Since March 2025 in July",
+          "summary": "The Nasdaq-100 tumbled more than 7% in July, its steepest monthly decline since March 2025, as the index faced headwinds from geopolitical strife, turbulent energy markets, Fed policy uncertainty, and a sharp semiconductor sell-off.",
+          "source": "Reuters (via aggregator data)"
+        }
+      ]
+    },
+    "macro": {
+      "headline": "Major central banks held rates steady this week as Middle East conflict-driven energy inflation complicates the policy outlook for the Fed, Bank of England, and ECB alike.",
+      "stories": [
+        {
+          "title": "Fed Holds Rates at 3.5%–3.75% for Fifth Straight Meeting; September Hike Back in Play",
+          "summary": "The Federal Reserve voted 9-3 to leave its benchmark rate unchanged at 3.5%–3.75% on July 29, with Chair Kevin Warsh pledging to 'deliver price stability' as US CPI runs at 3.5% and markets now price a 61% probability of a rate hike at the September FOMC meeting.",
+          "source": "Wall Street Journal / Federal Reserve"
+        },
+        {
+          "title": "Bank of England Holds Rate at 3.75%, Sees Inflation Peaking at 3.2% in Q4 2026",
+          "summary": "The Bank of England's MPC voted 6-3 on July 30 to hold the Bank Rate at 3.75%, with the Bank's central projection showing UK CPI inflation — currently 2.6% — peaking at around 3.2% in Q4 2026, driven by Middle East energy shocks disrupting the Strait of Hormuz.",
+          "source": "Bank of England"
+        },
+        {
+          "title": "ECB Next Policy Meeting Set for September 10 as Energy-Driven Inflation Persists",
+          "summary": "The ECB, which held rates unchanged since June 2026 after eight consecutive cuts, faces its next scheduled policy decision on September 10, with euro area headline inflation projected to average 2.6% in 2026, elevated by energy price spillovers from the Middle East conflict.",
+          "source": "European Central Bank"
+        }
+      ]
+    },
+    "ma": {
+      "headline": "Corporate dealmaking remained active heading into August, headlined by ICE's $5.7 billion bid for bond-trading platform MarketAxess and the intensifying UniCredit–Commerzbank takeover saga entering a critical new phase.",
+      "stories": [
+        {
+          "title": "Intercontinental Exchange to Acquire MarketAxess for $5.7 Billion, Creating Premier Fixed-Income Marketplace",
+          "summary": "ICE announced on July 30 a definitive all-cash agreement to acquire bond-trading platform MarketAxess at $167 per share — a 33% premium — in a $5.7 billion deal unanimously approved by both boards, aiming to unify fixed-income execution, data, and analytics across 90+ countries.",
+          "source": "Bloomberg / Wall Street Journal"
+        },
+        {
+          "title": "Commerzbank CEO Prepares for UniCredit Talks as European Banking Mega-Deal Nears Resolution",
+          "summary": "Commerzbank CEO Bettina Orlopp is set to hold a video conference with UniCredit executives in early August to begin negotiations over the German lender's future, after UniCredit secured approximately 49.65% of voting rights in what could become one of Europe's largest cross-border banking deals.",
+          "source": "Bloomberg"
+        },
+        {
+          "title": "Warner Bros. Discovery Terminates Netflix Merger, Pivots to Paramount Skydance Deal",
+          "summary": "Warner Bros. Discovery formally terminated its amended $82.7 billion merger agreement with Netflix on February 27, 2026 — with Paramount Skydance paying a $2.8 billion break fee to Netflix on WBD's behalf — as the media consolidation wave reshapes the global entertainment landscape ahead of a pending WBD-PSKY close.",
+          "source": "Reuters / SEC Filing"
+        }
+      ]
+    }
+  },
+  "fetchedAt": "19:53",
+  "fetchedDate": "2026-08-02"
+}
