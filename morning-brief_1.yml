@@ -1,0 +1,49 @@
+# .github/workflows/morning-brief.yml
+# Place this file at: .github/workflows/morning-brief.yml in your repo
+#
+# What it does:
+#   - Runs at 8am UK time every weekday (Mon–Fri)
+#   - Calls Anthropic API via fetch_brief.py
+#   - Commits brief.json back to the repo
+#   - GitHub Pages serves index.html which reads brief.json
+
+name: Morning Finance Brief
+
+on:
+  schedule:
+    # 8am BST = 7am UTC (summer). Adjust to 8am UTC in winter (GMT = UTC).
+    # To cover both: run at 7am UTC (8am BST) — add a second cron for winter if needed.
+    - cron: "0 7 * * 1-5"   # 8am BST Mon–Fri (summer)
+    - cron: "0 8 * * 1-5"   # 8am GMT Mon–Fri (winter)
+
+  workflow_dispatch:        # also allows manual trigger from GitHub UI
+
+jobs:
+  fetch-brief:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Fetch today's brief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python fetch_brief.py
+
+      - name: Commit brief.json
+        run: |
+          git config user.name  "Morning Brief Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add brief.json
+          # Only commit if the file actually changed
+          git diff --staged --quiet || git commit -m "📰 Morning brief $(date -u +%Y-%m-%d)"
+          git push

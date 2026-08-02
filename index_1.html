@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Morning Finance Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #F2F1EE; min-height: 100vh; color: #1A2332; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Header ── */
+  header { background: #0D1E3D; padding: 20px 28px; }
+  .hi { max-width: 840px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; }
+  .eyebrow { font-size: 10px; letter-spacing: 3px; color: #C9962C; font-weight: 700; margin-bottom: 5px; }
+  .title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #fff; }
+  .sub   { font-size: 11px; color: #64748B; margin-top: 4px; }
+  .upd   { font-size: 10px; color: #475569; text-align: right; }
+
+  /* ── Body ── */
+  .body { max-width: 840px; margin: 0 auto; padding: 26px 28px; }
+
+  /* ── States ── */
+  .center { text-align: center; padding: 70px 20px; }
+  .spinner { width: 36px; height: 36px; border: 3px solid #E2E8F0; border-top-color: #C9962C; border-radius: 50%; animation: spin .85s linear infinite; margin: 0 auto 16px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .load-msg { font-size: 13px; color: #6B7280; }
+  .error-box { background: #FEF2F2; border: 1px solid #FECACA; border-radius: 5px; padding: 14px 16px; margin-bottom: 18px; font-size: 12px; color: #991B1B; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; border-bottom: 2px solid #DDD9D0; margin-bottom: 24px; }
+  .tab { background: none; border: none; border-bottom: 2.5px solid transparent; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; cursor: pointer; color: #94A3B8; margin-bottom: -2px; text-transform: uppercase; }
+  .tab.active { color: #0D1E3D; border-bottom-color: #C9962C; }
+
+  /* ── Section ── */
+  .sec-eye  { font-size: 10px; letter-spacing: 2.5px; color: #C9962C; font-weight: 700; margin-bottom: 7px; text-transform: uppercase; }
+  .sec-head { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: #0D1E3D; line-height: 1.45; margin-bottom: 22px; }
+
+  /* ── Cards ── */
+  .stories { display: flex; flex-direction: column; gap: 12px; }
+  .card { background: #fff; border-radius: 6px; overflow: hidden; border: 1px solid #DDD9D0; transition: border-color 0.15s; }
+  .card.open { border-color: rgba(201,150,44,0.3); box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  .card-head { padding: 17px 20px; border-left: 3px solid #C9962C; cursor: pointer; }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
+  .card-title { font-size: 14px; font-weight: 600; color: #0D1E3D; line-height: 1.35; flex: 1; }
+  .card-meta { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+  .card-source { font-size: 9px; color: #94A3B8; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+  .card-toggle { font-size: 18px; color: #C9962C; font-weight: 300; width: 16px; text-align: center; line-height: 1; }
+  .card-summary { font-size: 13px; color: #374151; line-height: 1.65; }
+  .card-hint { font-size: 11px; color: #C9962C; font-weight: 600; margin-top: 9px; letter-spacing: 0.3px; }
+
+  /* ── Analysis panel ── */
+  .analysis { border-top: 1px solid #DDD9D0; padding: 18px 20px 20px; display: none; }
+  .card.open .analysis { display: block; }
+  .analysis-eye { font-size: 10px; letter-spacing: 2px; color: #C9962C; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; }
+  .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .q-block { border-radius: 5px; padding: 12px 14px; border: 1px solid; }
+  .q-block.full { grid-column: 1 / -1; }
+  .q-label { font-size: 9px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 5px; }
+  .q-text  { font-size: 12.5px; line-height: 1.65; }
+  .spin-sm { width: 18px; height: 18px; border: 2px solid #E2E8F0; border-top-color: #C9962C; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 10px; }
+
+  /* ── Footer ── */
+  .footer { margin-top: 26px; padding-top: 14px; border-top: 1px solid #DDD9D0; display: flex; justify-content: space-between; font-size: 11px; color: #94A3B8; }
+  .gold { color: #C9962C; font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .analysis-grid { grid-template-columns: 1fr; }
+    .q-block.full { grid-column: 1; }
+    header { padding: 16px 16px; }
+    .body { padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div>
+      <div class="eyebrow">MORNING BRIEF</div>
+      <div class="title">Financial Intelligence</div>
+      <div class="sub" id="dateStr"></div>
+    </div>
+    <div class="upd" id="updTag"></div>
+  </div>
+</header>
+
+<div class="body" id="app">
+  <div class="center">
+    <div class="spinner"></div>
+    <div class="load-msg">Loading today's brief…</div>
+  </div>
+</div>
+
+<script>
+const SECTS = [
+  { key: "markets", label: "Markets & Equities",   short: "Markets" },
+  { key: "macro",   label: "Macro & Central Banks", short: "Macro"   },
+  { key: "ma",      label: "M&A & Strategy",        short: "M&A"     },
+];
+
+const QUESTIONS = [
+  { key: "what",        label: "What happened",                   bg: "#EFF6FF", border: "#BFDBFE", lc: "#1D4ED8" },
+  { key: "why",         label: "Why did it happen",               bg: "#EFF6FF", border: "#BFDBFE", lc: "#1D4ED8" },
+  { key: "expected",    label: "Was it expected",                 bg: "#F0FDF4", border: "#BBF7D0", lc: "#15803D" },
+  { key: "benefits",    label: "Who benefits",                    bg: "#F0FDF4", border: "#BBF7D0", lc: "#15803D" },
+  { key: "hurt",        label: "Who is hurt",                     bg: "#FFF7ED", border: "#FED7AA", lc: "#C2410C" },
+  { key: "immediate",   label: "Immediate market impact",         bg: "#F5F3FF", border: "#DDD6FE", lc: "#7C3AED" },
+  { key: "longterm",    label: "Long-term implications",          bg: "#F5F3FF", border: "#DDD6FE", lc: "#7C3AED" },
+  { key: "client",      label: "If advising a client",            bg: "#0D1E3D", border: "#0D1E3D", lc: "#C9962C", dark: true, full: true },
+  { key: "assumptions", label: "Assumptions that might be wrong", bg: "#FFF1F2", border: "#FECDD3", lc: "#BE123C", full: true },
+];
+
+const ANALYSIS_PROMPT = `You are a senior financial analyst. Provide a deep 9-point analysis of this news story. Return ONLY a valid JSON object:
+{
+  "what": "What exactly happened — 2 sentences.",
+  "why": "The causes and context — 2 sentences.",
+  "expected": "Was this expected or a surprise — 2 sentences.",
+  "benefits": "Who gains and how — 2 sentences.",
+  "hurt": "Who is disadvantaged — 2 sentences.",
+  "immediate": "Immediate market impact — 2 sentences.",
+  "longterm": "Long-term implications — 2 sentences.",
+  "client": "What you would tell a client — 2 sentences.",
+  "assumptions": "Key assumptions that could prove wrong — 2 sentences."
+}
+Return ONLY the JSON.`;
+
+let brief = null;
+let activeSec = "markets";
+let analysisCache = {};
+
+const now = new Date();
+const dateStr = now.toLocaleDateString("en-GB", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+document.getElementById("dateStr").textContent = dateStr;
+
+// ── Load brief.json (written by GitHub Actions) ───────────────────────────
+fetch("brief.json?t=" + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    brief = data.brief;
+    const tag = document.getElementById("updTag");
+    tag.textContent = data.fetchedAt ? `Auto-fetched at ${data.fetchedAt}` : "";
+    renderSection();
+  })
+  .catch(err => {
+    document.getElementById("app").innerHTML =
+      `<div class="error-box">Could not load brief.json — ${err.message}<br>The GitHub Actions workflow may not have run yet today.</div>`;
+  });
+
+// ── Render section ────────────────────────────────────────────────────────
+function renderSection() {
+  if (!brief) return;
+  const sec  = brief[activeSec];
+  const meta = SECTS.find(s => s.key === activeSec);
+
+  const tabs = SECTS.map(s =>
+    `<button class="tab${s.key===activeSec?" active":""}" onclick="switchSec('${s.key}')">${s.short}</button>`
+  ).join("");
+
+  const cards = (sec?.stories || []).map((story, i) => {
+    const key = `${activeSec}-${i}`;
+    return `
+    <div class="card" id="card-${key}">
+      <div class="card-head" onclick="toggleCard('${key}',${i})">
+        <div class="card-top">
+          <div class="card-title">${esc(story.title)}</div>
+          <div class="card-meta">
+            <div class="card-source">${esc(story.source)}</div>
+            <div class="card-toggle" id="tog-${key}">+</div>
+          </div>
+        </div>
+        <div class="card-summary">${esc(story.summary)}</div>
+        <div class="card-hint">Click for deep analysis ›</div>
+      </div>
+      <div class="analysis" id="analysis-${key}">
+        <div class="analysis-eye">Deep Analysis</div>
+        <div id="analysis-content-${key}">
+          <div><span class="spin-sm"></span>Generating analysis…</div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  document.getElementById("app").innerHTML = `
+    <div class="tabs">${tabs}</div>
+    <div class="sec-eye">${esc(meta?.label||"")}</div>
+    <div class="sec-head">${esc(sec?.headline||"")}</div>
+    <div class="stories">${cards}</div>
+    <div class="footer">
+      <span>3 stories · ${esc(brief.date||dateStr)}</span>
+      <span>Powered by <span class="gold">Claude + GitHub Actions</span></span>
+    </div>`;
+}
+
+function switchSec(key) { activeSec = key; renderSection(); }
+
+function esc(s) {
+  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// ── Toggle card open/closed, trigger analysis fetch ──────────────────────
+async function toggleCard(key, storyIdx) {
+  const card = document.getElementById("card-" + key);
+  const tog  = document.getElementById("tog-" + key);
+  const isOpen = card.classList.toggle("open");
+  tog.textContent = isOpen ? "−" : "+";
+  if (isOpen) await loadAnalysis(key, storyIdx);
+}
+
+async function loadAnalysis(key, storyIdx) {
+  const contentEl = document.getElementById("analysis-content-" + key);
+  if (analysisCache[key]) { renderAnalysis(key, analysisCache[key]); return; }
+
+  const sec   = brief[activeSec];
+  const story = sec?.stories?.[storyIdx];
+  if (!story) return;
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1500,
+        system: ANALYSIS_PROMPT,
+        messages: [{
+          role: "user",
+          content: `Story: "${story.title}"\nContext: ${story.summary}\nSource: ${story.source}\n\nProvide the 9-point analysis as JSON.`
+        }]
+      })
+    });
+    const data = await res.json();
+    const text = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");
+    const m = text.replace(/```json|```/g,"").trim().match(/\{[\s\S]*\}/);
+    if (!m) throw new Error("No JSON in response");
+    const analysis = JSON.parse(m[0]);
+    analysisCache[key] = analysis;
+    renderAnalysis(key, analysis);
+  } catch(err) {
+    contentEl.innerHTML = `<div style="color:#DC2626;font-size:12px;font-family:monospace">Analysis failed: ${esc(err.message)}</div>`;
+  }
+}
+
+function renderAnalysis(key, a) {
+  const el = document.getElementById("analysis-content-" + key);
+  const blocks = QUESTIONS.map(q => `
+    <div class="q-block${q.full?" full":""}" style="background:${q.bg};border-color:${q.border}">
+      <div class="q-label" style="color:${q.lc}">${q.label}</div>
+      <div class="q-text" style="color:${q.dark?"#E2E8F0":"#1F2937"}">${esc(a[q.key]||"—")}</div>
+    </div>`).join("");
+  el.innerHTML = `<div class="analysis-grid">${blocks}</div>`;
+}
+</script>
+</body>
+</html>
